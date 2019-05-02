@@ -11,18 +11,24 @@ import io.netty.util.CharsetUtil;
  */
 public class TimeClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
-    private final ByteBuf firstMessage;
+    private final String firstMessage;
+
+    private int counter;
 
     public TimeClientHandler(){
-        firstMessage = Unpooled.copiedBuffer("QUERY TIME ORDER", CharsetUtil.UTF_8);
+        firstMessage = "QUERY TIME ORDER" + System.getProperty("line.separator");
     }
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf) throws Exception {
-        System.out.println("Now is : "+byteBuf.toString(CharsetUtil.UTF_8));
+        System.out.println("Now is : "+byteBuf.toString(CharsetUtil.UTF_8) +"; the counter is " + ++counter);
     }
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        ctx.writeAndFlush(firstMessage);
+        for(int i=0;i<100;i++){
+            ByteBuf message = Unpooled.copiedBuffer(firstMessage,CharsetUtil.UTF_8);
+            ctx.writeAndFlush(message);
+        }
+
     }
 
     @Override
