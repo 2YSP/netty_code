@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
+import java.util.Date;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -39,7 +40,7 @@ public class HeartBeatReqHandler extends SimpleChannelInboundHandler<String> {
             //服务端返回ok开始心跳
             heartBeat = ctx.executor().scheduleAtFixedRate(new HeartBeatTask(ctx),0,5000, TimeUnit.MILLISECONDS);
         }else {
-            System.out.println("Client receive server heart beat message : --->"+msg);
+            System.out.println(new Date().toString() + " Client receive server heart beat message : --->"+msg);
         }
     }
 

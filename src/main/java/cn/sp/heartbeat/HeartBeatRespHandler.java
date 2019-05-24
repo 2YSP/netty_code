@@ -5,6 +5,8 @@ import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
+import java.util.Date;
+
 /**
  * Created by 2YSP on 2019/5/23.
  */
@@ -19,7 +21,7 @@ public class HeartBeatRespHandler extends SimpleChannelInboundHandler<String> {
             ctx.writeAndFlush(Unpooled.copiedBuffer("ok$_".getBytes()));
         }else {
             //返回心跳应答信息
-            System.out.println("Receive client heart beat message: ---->"+ msg);
+            System.out.println(new Date().toString()+" Receive client heart beat message: ---->"+ msg);
             ctx.writeAndFlush(Unpooled.copiedBuffer(resp.getBytes()));
         }
     }
